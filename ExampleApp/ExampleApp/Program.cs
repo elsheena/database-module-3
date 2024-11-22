@@ -228,9 +228,8 @@ void ForeignHeads(MySqlConnection connection, string[] command)
     try
     {
         var cmd = new MySqlCommand("SELECT d.name, t.first_name, t.surname FROM departments d " +
-            "INNER JOIN teachers t ON d.id = t.departmentid " +
-            "INNER JOIN teachers t ON d.id = t.departmentid " +
-            "WHERE t.id NOT IN (SELECT head_of_department FROM departments)", connection);
+            "INNER JOIN teachers t ON d.id != t.departmentid " +
+            "WHERE t.id IN (SELECT head_of_the_department FROM departments)", connection);
         using var reader = cmd.ExecuteReader();
         while (reader.Read())
         {
